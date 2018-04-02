@@ -1,17 +1,22 @@
 package com.yivon.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
-@Table(name = "t_staff", schema = "springdemo", catalog = "")
+@Table(name = "t_staff", schema = "datebase", catalog = "")
 public class TStaffEntity {
     private int staffId;
     private String account;
     private String psd;
     private String name;
     private String phone;
-    private String department;
     private String postion;
+    private String department;
+    private String entrytime;
+    private Timestamp creatime;
+    private Timestamp updatetime;
 
     @Id
     @Column(name = "staff_id", nullable = false)
@@ -64,6 +69,16 @@ public class TStaffEntity {
     }
 
     @Basic
+    @Column(name = "postion", nullable = false, length = 30)
+    public String getPostion() {
+        return postion;
+    }
+
+    public void setPostion(String postion) {
+        this.postion = postion;
+    }
+
+    @Basic
     @Column(name = "department", nullable = false, length = 30)
     public String getDepartment() {
         return department;
@@ -74,42 +89,55 @@ public class TStaffEntity {
     }
 
     @Basic
-    @Column(name = "postion", nullable = false, length = 30)
-    public String getPostion() {
-        return postion;
+    @Column(name = "entrytime", nullable = false, length = 12)
+    public String getEntrytime() {
+        return entrytime;
     }
 
-    public void setPostion(String postion) {
-        this.postion = postion;
+    public void setEntrytime(String entrytime) {
+        this.entrytime = entrytime;
+    }
+
+    @Basic
+    @Column(name = "creatime", nullable = false)
+    public Timestamp getCreatime() {
+        return creatime;
+    }
+
+    public void setCreatime(Timestamp creatime) {
+        this.creatime = creatime;
+    }
+
+    @Basic
+    @Column(name = "updatetime", nullable = false)
+    public Timestamp getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Timestamp updatetime) {
+        this.updatetime = updatetime;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TStaffEntity that = (TStaffEntity) o;
-
-        if (staffId != that.staffId) return false;
-        if (account != null ? !account.equals(that.account) : that.account != null) return false;
-        if (psd != null ? !psd.equals(that.psd) : that.psd != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (department != null ? !department.equals(that.department) : that.department != null) return false;
-        if (postion != null ? !postion.equals(that.postion) : that.postion != null) return false;
-
-        return true;
+        return staffId == that.staffId &&
+                Objects.equals(account, that.account) &&
+                Objects.equals(psd, that.psd) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(postion, that.postion) &&
+                Objects.equals(department, that.department) &&
+                Objects.equals(entrytime, that.entrytime) &&
+                Objects.equals(creatime, that.creatime) &&
+                Objects.equals(updatetime, that.updatetime);
     }
 
     @Override
     public int hashCode() {
-        int result = staffId;
-        result = 31 * result + (account != null ? account.hashCode() : 0);
-        result = 31 * result + (psd != null ? psd.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (department != null ? department.hashCode() : 0);
-        result = 31 * result + (postion != null ? postion.hashCode() : 0);
-        return result;
+
+        return Objects.hash(staffId, account, psd, name, phone, postion, department, entrytime, creatime, updatetime);
     }
 }
